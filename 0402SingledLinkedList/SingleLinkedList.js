@@ -1,7 +1,44 @@
 export class SingleLinkedList {
     constructor(anyData = null) {
-        this.anyData = anyData
-        this.slNex = null
+        if (Object.prototype.toString.call(anyData) === '[object Array]') {
+            if (!anyData.length) throw new Error('Array length cannot be 0')
+            this.anyData = anyData[0]
+            this.slNex = null
+            this.batchAdd(anyData.slice(1))
+        } else {
+            this.anyData = anyData
+            this.slNex = null
+        }
+    }
+
+    getNodeLength() {
+        let numRes = 1
+        let slTmp = this
+        while (slTmp.slNex !== null) {
+            numRes++
+            slTmp = slTmp.slNex
+        }
+        return numRes
+    }
+
+    getNodeByIndex(numIndex) {
+        // positive: 正序
+        // negative: 倒序
+        let numCurTraverseCount = 0;
+        let slRes = this
+        if (numIndex >= 0) {
+            while (numCurTraverseCount !== numIndex) {
+                slRes = slRes.slNex
+                numCurTraverseCount++
+            }
+        } else {
+            const numTotalLength = this.getNodeLength()
+            while (numCurTraverseCount < (numTotalLength + numIndex)) {
+                slRes = slRes.slNex
+                numCurTraverseCount++
+            }
+        }
+        return slRes
     }
 
     setNextNode(anyParam) {
@@ -27,6 +64,30 @@ export class SingleLinkedList {
         for (let i = 1; i < arrParam.length; i++) {
             slEndNode = slEndNode.add(arrParam[i])
         }
+    }
+
+    reverse() {
+        if (this.slNex === null) return this
+        let slPre = this
+        let slCur = slPre.slNex
+        let slNex = slCur.slNex
+        if (slNex === null) {
+            slPre.next = null
+            slCur.next = slPre
+            return slCur
+        }
+        this.slNex = null
+
+        let slOriNex = slNex
+        while (slOriNex !== null) {
+            slCur.slNex = slPre
+            slPre = slCur
+            slCur = slOriNex
+            slOriNex = slCur.slNex
+        }
+        slCur.slNex = slPre
+
+        return slCur
     }
 
     print() {
