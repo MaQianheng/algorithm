@@ -41,6 +41,13 @@ export class SingleLinkedList {
         return slRes
     }
 
+    removeNodeByIndex(numIndex) {
+        if (numIndex === 0) return this.slNex
+        const slTmp = this.getNodeByIndex(numIndex - 1)
+        slTmp.slNex = slTmp.slNex ? slTmp.slNex.slNex : null
+        return this.getNodeByIndex(0)
+    }
+
     setNextNode(anyParam) {
         let slOriNex = this.slNex
         if (anyParam instanceof SingleLinkedList) this.slNex = anyParam

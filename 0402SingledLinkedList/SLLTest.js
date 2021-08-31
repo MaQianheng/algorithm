@@ -15,9 +15,13 @@ const slTmp3 = new SingleLinkedList([46, 51, 54, 55, 57, 79, 80, 82, 83, 85, 86,
 
 // console.log(slTmp.getNodeByIndex(-1).anyData)
 
-unionSortedSLLNumber([slTmp, slTmp1, slTmp2, slTmp3]).print()
+const slConsolidatedRes = consolidateSortedSLLNumber([slTmp, slTmp1, slTmp2, slTmp3])
+// slConsolidatedRes.removeNodeByIndex(0).print()
+const slTmp5 = new SingleLinkedList([0, 1, 2, 3, 4])
+slTmp5.removeNodeByIndex(0).print()
 
-function unionSortedSLLNumber(arrParam) {
+
+function consolidateSortedSLLNumber(arrParam) {
     const arrContainer = [], arrRes = []
     for (let i = 0; i < arrParam.length; i++) {
         arrContainer[i] = arrParam[i].anyData
