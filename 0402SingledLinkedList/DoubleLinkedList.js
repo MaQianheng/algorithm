@@ -103,6 +103,19 @@ export class DoubleLinkedList {
     }
 
     reverse() {
+        let dlCur = this, dlNex = dlCur.dlNex, dlTmp
+        if (!dlNex) return dlCur
+        dlCur.dlNex = null
+        dlCur.dlPre = dlNex
+        dlCur = dlNex
+        while (dlCur.dlNex) {
+            dlTmp = dlCur.dlPre
+            dlCur.dlPre = dlCur.dlNex
+            dlCur.dlNex = dlTmp
+            dlCur = dlCur.dlPre
+        }
+        dlCur.dlNex = dlCur.dlPre
+        return dlCur
     }
 
     print() {
