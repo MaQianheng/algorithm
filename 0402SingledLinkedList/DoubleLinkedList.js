@@ -51,18 +51,26 @@ export class DoubleLinkedList {
     }
 
     removeNodeByIndex(numIndex) {
-        // if (numIndex === 0) return this.dlNex
-        // const dlTmp = this.getNodeByIndex(numIndex - 1)
-        // dlTmp.dlNex = dlTmp.dlNex ? dlTmp.dlNex.dlNex : null
-        // return this.getNodeByIndex(0)
+        const dlWillBeRemoved = this.getNodeByIndex(numIndex)
+        if (dlWillBeRemoved.dlPre && dlWillBeRemoved.dlNex) {
+            dlWillBeRemoved.dlPre.dlNex = dlWillBeRemoved.dlNex
+            dlWillBeRemoved.dlNex.dlPre = dlWillBeRemoved.dlPre
+        }
+        if (!dlWillBeRemoved.dlPre) {
+            dlWillBeRemoved.dlNex.dlPre = null
+            return this.dlNex
+        }
+        if (!dlWillBeRemoved.dlNex) dlWillBeRemoved.dlPre.dlNex = null
+        return this
     }
 
-    setNode(strDirection = 'NEXT', dlWillBeReplaced, anyParam) {
+    setNode(strType = 'NEXT', anyParam, dlWillBeReplaced) {
+        if (strType === 'THIS') this.anyData = anyParam
         let dlNew
         if (anyParam instanceof DoubleLinkedList) dlNew = anyParam
         else dlNew = new DoubleLinkedList(anyParam)
         if (dlWillBeReplaced === null) {
-            if (strDirection === 'PREV') {
+            if (strType === 'PREV') {
                 this.dlPre = dlNew
                 dlNew.dlNex = this
             } else {
@@ -77,11 +85,11 @@ export class DoubleLinkedList {
     }
 
     setPrevNode(anyParam) {
-        return this.setNode('PREV', this.dlPre, anyParam)
+        return this.setNode('PREV', anyParam, this.dlPre)
     }
 
     setNextNode(anyParam) {
-        return this.setNode('NEXT', this.dlNex, anyParam)
+        return this.setNode('NEXT', anyParam, this.dlNex)
     }
 
     // return the last node
