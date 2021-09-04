@@ -1,13 +1,12 @@
 export class SingleLinkedList {
     constructor(anyData = null) {
+        this.slNex = null
         if (Object.prototype.toString.call(anyData) === '[object Array]') {
             if (!anyData.length) throw new Error('Array length cannot be 0')
             this.anyData = anyData[0]
-            this.slNex = null
             this.batchAdd(anyData.slice(1))
         } else {
             this.anyData = anyData
-            this.slNex = null
         }
     }
 
