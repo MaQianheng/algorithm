@@ -47,7 +47,7 @@ export class SingleCircularLinkedList {
             while (numCurTraverseCount !== numIndex) {
                 sclRes = sclRes.sclNex
                 numCurTraverseCount++
-                if (sclRes === this.sclHead && numCurTraverseCount <= numIndex) throw new Error(`Index out of range which max is ${numCurTraverseCount - 1}`)
+                // if (sclRes === this.sclHead && numCurTraverseCount <= numIndex) throw new Error(`Index out of range which max is ${numCurTraverseCount - 1}`)
             }
         } else {
             const numTotalLength = this.getNodeLength()
@@ -61,16 +61,52 @@ export class SingleCircularLinkedList {
         return sclRes
     }
 
+    updateHead(sclNode, sclHead) {
+        sclNode.sclHead = sclHead
+    }
+
     removeByIndex(numIndex) {
-        // todo: support remove head node, if remove head node update all nodes' sclHead property
-        numIndex = numIndex - 1
-        if (numIndex === -1) throw new Error('Head node cannot be removed')
-        if (numIndex < 0) throw new Error('Index invalid')
-        const sclTmp = this.getNodeByIndex(numIndex)
-        if (sclTmp.sclNex === this.sclHead) throw new Error(`Index out of range`)
-        const sclRes = sclTmp.sclNex
+        const sclTmp = this.getNodeByIndex(numIndex - 1)
+        let sclHead
+        if (sclTmp.sclNex === this.sclHead) {
+            if (numIndex !== 0) throw new Error('Index out of range')
+            else sclHead = sclTmp.sclNex.sclNex
+        }
         sclTmp.sclNex = sclTmp.sclNex.sclNex
-        return sclRes
+        if (sclHead) {
+            sclTmp.sclHead = sclHead
+            sclHead.sclHead = sclHead
+            let sclCur = sclHead
+            while (sclCur.sclNex !== sclHead) {
+                sclCur.sclHead = sclHead
+                sclCur = sclCur.sclNex
+            }
+            this.sclNex = null
+            this.sclHead = sclHead
+        }
+        return sclTmp.sclHead
+    }
+
+    dequeueByIndex(numIndex) {
+        const sclTmp = this.getNodeByIndex(numIndex - 1)
+        let sclHead
+        if (sclTmp.sclNex === this.sclHead) {
+            sclHead = sclTmp.sclNex.sclNex
+        }
+        const sclRemoved = sclTmp.sclNex
+        const sclNex = sclTmp.sclNex.sclNex
+        sclTmp.sclNex = sclTmp.sclNex.sclNex
+        if (sclHead) {
+            sclTmp.sclHead = sclHead
+            sclHead.sclHead = sclHead
+            let sclCur = sclHead
+            while (sclCur.sclNex !== sclHead) {
+                sclCur.sclHead = sclHead
+                sclCur = sclCur.sclNex
+            }
+            this.sclHead = sclHead
+        }
+        return {sclRemoved, sclNex}
     }
 
     print() {
