@@ -90,9 +90,7 @@ export class SingleCircularLinkedList {
     dequeueByIndex(numIndex) {
         const sclTmp = this.getNodeByIndex(numIndex - 1)
         let sclHead
-        if (sclTmp.sclNex === this.sclHead) {
-            sclHead = sclTmp.sclNex.sclNex
-        }
+        if (sclTmp.sclNex === this.sclHead) sclHead = sclTmp.sclNex.sclNex
         const sclRemoved = sclTmp.sclNex
         const sclNex = sclTmp.sclNex.sclNex
         sclTmp.sclNex = sclTmp.sclNex.sclNex
