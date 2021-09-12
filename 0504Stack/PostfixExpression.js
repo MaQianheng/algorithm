@@ -69,6 +69,7 @@ function funcInfixStrToPostfixArr(strParam) {
     let strTmp = ''
     for (let i = 0; i < strParam.length; i++) {
         const charTmp = strParam[i]
+        if (charTmp === ' ') continue
         if (ifNumber(charTmp)) strTmp += charTmp
         else {
             // 遇到非数字，如果是小数点，追加并进入下一轮循环
@@ -112,4 +113,5 @@ function funcInfixStrToPostfixArr(strParam) {
     return arrEtc
 }
 
-console.log(funcCalPostfixArr(funcInfixStrToPostfixArr('(30.322+4)*5-6')))
+// console.log(funcCalPostfixArr(funcInfixStrToPostfixArr('(30.322+4)*5-6')))
+console.log(funcCalPostfixArr(funcInfixStrToPostfixArr('1+((2+3)*4)-5')))
