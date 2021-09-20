@@ -45,7 +45,11 @@ function handleFindWay(arrParam, numStartRow, numStartCol, numEndRow, numEndCol)
             // 假定该点可以走通
             arrParam[numStartRow][numStartCol] = 2
             // 下-右-上-左
-            if (handleFindWay(arrParam, numStartRow + 1, numStartCol, numEndRow, numEndCol) || handleFindWay(arrParam, numStartRow, numStartCol + 1, numEndRow, numEndCol) || handleFindWay(arrParam, numStartRow - 1, numStartCol, numEndRow, numEndCol) || handleFindWay(arrParam, numStartRow, numStartCol - 1, numEndRow, numEndCol)) return true
+            if (
+                handleFindWay(arrParam, numStartRow + 1, numStartCol, numEndRow, numEndCol) ||
+                handleFindWay(arrParam, numStartRow, numStartCol + 1, numEndRow, numEndCol) ||
+                handleFindWay(arrParam, numStartRow - 1, numStartCol, numEndRow, numEndCol) ||
+                handleFindWay(arrParam, numStartRow, numStartCol - 1, numEndRow, numEndCol)) return true
             else {
                 arrParam[numStartRow][numStartCol] = 3
                 return false

@@ -9,7 +9,7 @@
  * @param anyFill: any initial fill value
  * @returns {[]}
  */
-export function twoDCoordinate (numRow, numCol, anyFill) {
+export function twoDCoordinate (numRow, numCol, anyFill = 0) {
     const arrRes = []
     for (let i = 0; i < numRow; i++) {
         arrRes.push(new Array(numCol).fill().map(() => anyFill))
