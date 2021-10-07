@@ -111,4 +111,88 @@ function shellSort(arrParam) {
     return arrParam
 }
 
-console.log(shellSort(arrNums))
+// console.log(shellSort(arrNums))
+
+function quickSort(arrParam, numLeftIndex = 0, numRightIndex = arrParam.length - 1) {
+    let numLI = numLeftIndex, numRI = numRightIndex
+    let numPivot = arrParam[(numLI + numRI) >> 1]
+    console.log('<----->')
+    // 把比pivot小的值放到左边，比pivot大的值放到右边
+    while (true) {
+        // 以numLI为下标，在pivot左边一直循环找，找到第一个大于等于pivot的数字。找到后numLI += 1，下一次while (numLI < numRI)循环的while (arrParam[numLI] < numPivot)循环从此处开始
+        while (arrParam[numLI] < numPivot) {
+            numLI += 1
+        }
+        while (arrParam[numRI] > numPivot) {
+            numRI -= 1
+        }
+        /**
+         * 出现如下情况：[1, 22, 12, 24, 43, 25, 27, 88]
+         *  pivot是24，下标为3
+         *  此时24左边所有数字都小于pivot，右边数字都大于pivot。numLI = 3, numRI = 3
+         *  此时应结束循环
+         */
+        if (numLI >= numRI) break
+        console.log(`${numLI}: ${arrParam[numLI]}`, `${numRI}: ${arrParam[numRI]}`)
+        handleSwapArrElement(arrParam, numLI, numRI)
+        if (arrParam[numRI] === numPivot) numLI += 1
+        if (arrParam[numLI] === numPivot) numRI -= 1
+        /**
+         * [1, 43, 12, 24, 24, 25, 27, 88]
+         * 43 <=> 24
+         * [1, 24, 12, 24, 43, 25, 27, 88]
+         */
+        // console.log(numLI, numRI)
+    }
+    console.log(arrParam)
+
+    /**
+     * 出现如下情况：[1, 22, 12, 24, 43, 25, 27, 88]
+     * numLI = 3, numRI = 3
+     */
+    if (numLI === numRI) {
+        numLI += 1
+        numRI -= 1
+    }
+    if (numLeftIndex < numRI) quickSort(arrParam, numLeftIndex, numRI)
+    if (numRightIndex > numLI) quickSort(arrParam, numLI, numRightIndex)
+    return arrParam
+}
+
+// [1, 22, 12, 24, 43, 24, 27, 88]
+const arr = [1, 43, 24, 24, 24, 25, 27, 88]
+
+console.log(quickSort(arr))
+
+
+function quickSort2(arr, left = 0, right = arr.length - 1) {
+    if (left < right) {
+        let pivot = left, index = pivot + 1
+        for (let i = index; i <= right; i++) {
+            if (arr[i] < arr[pivot]) {
+                handleSwapArrElement(arr, i, index)
+                index++
+            }
+        }
+        handleSwapArrElement(arr, pivot, index - 1)
+        let partitionIndex = index - 1
+        quickSort2(arr, left, partitionIndex - 1)
+        quickSort2(arr, partitionIndex + 1, right)
+    }
+    return arr
+}
+
+function partition(arr, left, right) {     // 分区操作
+    let pivot = left,                      // 设定基准值（pivot）
+        index = pivot + 1
+    for (let i = index; i <= right; i++) {
+        if (arr[i] < arr[pivot]) {
+            handleSwapArrElement(arr, i, index)
+            index++
+        }
+    }
+    handleSwapArrElement(arr, pivot, index - 1)
+    return index - 1
+}
+
+// console.log(quickSort2(arrNums, 0, arrNums.length - 1))
