@@ -196,3 +196,13 @@ function partition(arr, left, right) {     // 分区操作
 }
 
 // console.log(quickSort2(arrNums, 0, arrNums.length - 1))
+
+// const readline = require('readline');
+// const rl = readline.createInterface({
+//    input: process.stdin,
+//    output: process.stdout
+// });
+// rl.on('line', function(data){
+//    console.log(data);
+// })
+
