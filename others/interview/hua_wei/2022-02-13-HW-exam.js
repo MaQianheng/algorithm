@@ -74,7 +74,8 @@ function func1(numMachines, arrMachinesConfig) {
     console.log(numRes + Math.max(...arrMachineRemainingTasks))
 }
 
-func1(2, [[0, 2], [0, 10], [1, 5], [3, 2]])
+// func1(2, [[0, 2], [0, 10], [1, 5], [3, 2]])
+
 // func1(3, [[1, 8], [2, 2], [1, 8]])
 
 function func2(arr1, arr2, numPair) {
@@ -87,5 +88,58 @@ function func2(arr1, arr2, numPair) {
     }
     console.log(arr)
 }
+
 // 两对元素如果对应于arr1，arr2中的两个下标均相同，则视为同一对元素
 // func2([1, 1, 2], [1, 2, 3], 2)
+
+function func3() {
+    console.log('begin')
+    setTimeout(() => {
+        console.log('setTimeout 1')
+        Promise.resolve().then(() => {
+            console.log('promise 1')
+            setTimeout(() => {
+                console.log('setTimeout2 between promise1&2')
+            })
+        }).then(() => {
+            console.log('promise 2')
+        })
+    }, 0)
+    console.log('end')
+}
+
+/**
+ * begin
+ * end
+ * setTimeout 1
+ * promise 1
+ * promise 2
+ * setTimeout2 between promise1&2
+ */
+// func3()
+
+function func4() {
+    var length = 10;
+
+    function fn() {
+        console.log(this)
+        return this.length + 1;
+    }
+
+    fn()
+
+    var obj = {
+        length: 5,
+        test1: function () {
+            return fn();
+        }
+    };
+    obj.test2 = fn;
+    //下面代码输出是什么
+    // 6
+    console.log(obj.test1())
+    // 10 7, false
+    console.log(fn() === obj.test2())
+}
+
+func4()

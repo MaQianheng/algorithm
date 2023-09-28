@@ -44,7 +44,7 @@ let func1 = (arr) => {
     return res
 }
 
-// console.log('结果：', func1(['A', 'B', 'C', 'D']))
+console.log('结果：', func1(['A', 'B', 'C', 'D']))
 
 function func2(arrParam) {
     const arrRes = []
@@ -67,4 +67,4 @@ function helper(arr1, arr2) {
     helper(arr1, arr2)
 }
 
-func2(['A', 'B', 'C', 'D'])
+// func2(['A', 'B', 'C', 'D'])
